@@ -7,31 +7,27 @@
 		<div v-if="movies">
 			<div v-for="movie in movies" :key="movie.id" class="mb-20">
 				<a class="bg-gray-500 text-slate-50 hover:text-pink-500 mb-3 block text-lg" :href="movie.url">
-					{{ movie.title }} ({{ movie.year }}) 👍🏻
+					{{ movie.title }} ({{ movie.year }}) {{ movie.rating >= 9 ? '👍🏻' : '' }}
 				</a>
 				<div class="flex">
 					<img
-						class="flex-3 w-40 h-auto text-left border-4 border-solid border-gray-600 rounded"
+						class="flex-3 w-auto h-80 text-left border-4 border-solid border-gray-600 rounded"
 						:src="movie.large_cover_image"
 						:alt="movie.title"
 					/>
-					<!-- <div :class="{{ movie.rating }}"></div> -->
 					<div class="flex-3 ml-4">
 						<div class="rating" :class="getRatingClass(movie.rating)">
 							평점: {{ movie.rating ? movie.rating + ' / 10점' : '정보없음' }}
 						</div>
-						<!-- <div>장르: {{ movie.genres.join(', ') }}</div> -->
 						<div>
 							장르: {{ movie.genres ? movie.genres.join(', ') : '정보없음' }}
 						</div>
-						
 						<div>
 							상영시간: {{ movie.runtime ? movie.runtime + '분' : '정보없음' }}
 						</div>
-
 						<div>요약: {{ movie.summary || '정보없음' }}</div>
 						<div>
-							토렌트 :
+							토렌트:
 							<span v-if="movie.torrents">
 								<a class="text-blue-800 active:text-red-800"
 									v-for="(tor, idx) in movie.torrents"
@@ -56,7 +52,7 @@ import axios from 'axios'
 
 const movies = ref()
 
-const getRatingClass = (rating) => {
+const getRatingClass = (rating: number) => {
   if (rating >= 9) {
     return 'good'
   } else if (rating >= 7) {
@@ -66,29 +62,13 @@ const getRatingClass = (rating) => {
   }
 }
 
-// onMounted(async () => {
-//   console.log('Mounted!!')
-//   try {
-//     const responce = await fetch(
-//       'https://yts.mx/api/v2/list_movies.json?sort_by=rating'
-//     )
-//     // const responce = await fetch('https://yts.mx/api/v2/list_movies.json')
-//     const json = await responce.json()
-//     movies.value = json.data.movies
-//     console.log('movies: ', movies.value)
-//   } catch (error) {
-//     console.log('Error fetching movies: ', error)
-//   }
-// })
-
-
 onMounted(async () => {
   console.log('Mounted!!')
   try {
     const response = await axios.get(
-      'https://yts.mx/api/v2/list_movies.json?sort_by=rating'
+      'https://yts.mx/api/v2/list_movies.json'
+      // 'https://yts.mx/api/v2/list_movies.json?sort_by=rating'
     )
-    // const responce = await fetch('https://yts.mx/api/v2/list_movies.json')
     const moviesData = response.data;
     movies.value = moviesData.data.movies
     console.log('movies: ', movies.value)
@@ -111,5 +91,4 @@ onMounted(async () => {
 .bad {
   color: #4cb9fa;
 }
-
 </style>
