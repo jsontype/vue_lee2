@@ -35,6 +35,13 @@
       </router-link>
       <router-link
         class="flex items-center px-6 py-2 mt-4 duration-200"
+        :class="[$route.name === 'News' ? activeClass : inactiveClass]"
+        to="/news"
+        >
+        <span class="mx-4 font-bold text-[21px]">News App</span>
+      </router-link>
+      <router-link
+        class="flex items-center px-6 py-2 mt-4 duration-200"
         :class="[$route.name === 'Account' ? activeClass : inactiveClass]"
         to="/account"
       >
