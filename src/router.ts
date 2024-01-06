@@ -3,6 +3,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 // import Start from "./views/Start.vue";
 import Movies from "/src/views/Movies.vue";
 import Account from "/src/views/Account.vue";
+import Todo from "/src/views/Todo.vue";
 
 const routes: RouteRecordRaw[] = [
   // {
@@ -20,6 +21,11 @@ const routes: RouteRecordRaw[] = [
     path: "/account",
     name: "Account",
     component: Account,
+  },
+  {
+    path: "/todo",
+    name: "Todo",
+    component: Todo,
   },
 ];
 
