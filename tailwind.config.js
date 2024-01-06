@@ -7,6 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        'my-color1':'rgb(0, 255, 38)',
         primary: {
           0: '#000000',
           10: '#001126',
