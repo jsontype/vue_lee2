@@ -4,18 +4,23 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Movies from "/src/views/Movies.vue";
 import Account from "/src/views/Account.vue";
 import Todo from "/src/views/Todo.vue";
+import Start from "/src/views/Start.vue";
 
 const routes: RouteRecordRaw[] = [
-  // {
-  //   path: "/",
-  //   name: "Home",
-  //   component: Start,
-  //   meta: { layout: "empty" },
-  // },
+  {
+    path: "/",
+    name: "Home",
+    component: Start,
+  },
   {
     path: "/movie",
     name: "Movie App",
     component: Movies,
+  },
+  {
+    path: "/todo",
+    name: "Todo",
+    component: Todo,
   },
   {
     path: "/account",
@@ -23,10 +28,11 @@ const routes: RouteRecordRaw[] = [
     component: Account,
   },
   {
-    path: "/todo",
-    name: "Todo",
-    component: Todo,
-  },
+    path: "/404",
+    name: "NotFound",
+    component: Start,
+    meta: { layout: "empty" },
+  }
 ];
 
 const router = createRouter({

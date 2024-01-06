@@ -15,7 +15,7 @@
       </button>
 
       <div class="relative mx-4 lg:mx-0">
-        <h2 class="ml-2 font-bold text-[20px]">Menu Title</h2>
+        <h2 class="ml-2 font-bold text-[20px]">{{ menuTitle }}</h2>
       </div>
     </div>
 
@@ -33,13 +33,33 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useSidebar } from "/src/hooks/useSidebar";
 
 const { isOpen } = useSidebar();
-const dropdownOpen = ref(false);
+// const dropdownOpen = ref(false);
+const route = useRoute();
 const router = useRouter();
+const menuTitle = ref('Home');
+
+const updateMenuTitle = () => {
+  switch (route.path) {
+    case '/movie':
+      menuTitle.value = 'Movie App';
+      break;
+    case '/todo':
+      menuTitle.value = 'Todo App';
+      break;
+    case '/account':
+      menuTitle.value = 'Account';
+      break;
+    default:
+      menuTitle.value = 'Home';
+  }
+};
+
+watch(() => route.path, updateMenuTitle, { immediate: true });
 
 const onClick = () => {
   router.push("/");

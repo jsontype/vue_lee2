@@ -14,25 +14,32 @@
       <nav class="mt-10">
         <router-link
           class="flex items-center px-6 py-2 mt-4 duration-200"
+          :class="[$route.name === 'Home' ? activeClass : inactiveClass]"
+          to="/"
+        >
+          <span class="mx-4 font-bold text-[21px]">Home</span>
+        </router-link>
+        <router-link
+          class="flex items-center px-6 py-2 mt-4 duration-200"
           :class="[$route.name === 'Movie' ? activeClass : inactiveClass]"
           to="/movie"
         >
           <span class="mx-4 font-bold text-[21px]">Movie App</span>
         </router-link>
         <router-link
-          class="flex items-center px-6 py-2 mt-4 duration-200"
-          :class="[$route.name === 'Account' ? activeClass : inactiveClass]"
-          to="/account"
+        class="flex items-center px-6 py-2 mt-4 duration-200"
+        :class="[$route.name === 'Todo' ? activeClass : inactiveClass]"
+        to="/todo"
         >
-          <span class="mx-4 font-bold text-[21px]">Account</span>
-        </router-link>
-        <router-link
-          class="flex items-center px-6 py-2 mt-4 duration-200"
-          :class="[$route.name === 'Todo' ? activeClass : inactiveClass]"
-          to="/todo"
-        >
-          <span class="mx-4 font-bold text-[21px]">Todo App</span>
-        </router-link>
+        <span class="mx-4 font-bold text-[21px]">Todo App</span>
+      </router-link>
+      <router-link
+        class="flex items-center px-6 py-2 mt-4 duration-200"
+        :class="[$route.name === 'Account' ? activeClass : inactiveClass]"
+        to="/account"
+      >
+        <span class="mx-4 font-bold text-[21px]">Account</span>
+      </router-link>
       </nav>
     </div>
   </div>
