@@ -6,19 +6,20 @@
 				<input class="h-7 m-1 border-2 border-solid border-gray-600 rounded" type="text" v-model="newTodo">
 			</span>
 			<span>
-				<button class="p-1 mb-2 bg-green-500 hover:bg-green-700 text-slate-50 rounded" @click="addTodo">추가</button>
+				<button class="p-1 m-1 bg-green-500 hover:bg-green-700 text-slate-50 rounded" @click="addTodo">추가</button>
+			</span>
+			<!-- 일괄삭제 기능 추가 -->
+			<span>
+				<button class="p-1 mb-2 bg-red-400 hover:bg-red-500	text-slate-50 rounded" @click="delSelected">일괄삭제</button>
 			</span>
 		</div>
 
 		<div v-for="todo in todos" :key="todo.id">
 			<span @click="toggleTodo(todo)">
 				<span># {{ todo.id }} / </span>
-				<span class="m-2">{{ todo.title }}</span>
-				<input type="checkbox" :checked="todo.completed" />
-				<button class="m-1 p-1 bg-pink-500 hover:bg-pink-700 text-slate-50 rounded" @click="delTodo(todo.id)">삭제</button>
-			</span>
-
-			<span>
+				<span class="mr-1" :class="{ 'text-red-600': todo.completed && isChecked(todo.id), 'line-through': todo.completed && isChecked(todo.id) }">{{ todo.title }}</span>
+				<!-- 항목체크 -->
+				<input class="m-1 p-1" type="checkbox" @change="toggleChecked(todo.id)" />
 			</span>
 		</div>
 	</div>
@@ -35,18 +36,15 @@ const clearTodo = () => {
 	newTodo.value = ''
 }
 
-function getTodos() {
-	fetch('https://jsonplaceholder.typicode.com/todos')
-		.then(res => res.json())
-		.then(json => {
-			// todos.push(...json)
-			console.log(json)
-			for (let i = 0; i < json.length; i++) {
-				if (json[i].userId === loginUserId.value) {
-					todos.push(json[i])
-				}
-			}
-		})
+// 항목 체크
+const checkedTodos = ref([])
+const isChecked = (id) => checkedTodos.value.includes(id);
+const toggleChecked = (id) => {
+	if(isChecked(id)) {
+		checkedTodos.value = checkedTodos.value.filter((todoId) => todoId !== id)
+	} else {
+		checkedTodos.value.push(id)
+	}
 }
 
 // 할일 추가
@@ -78,18 +76,21 @@ function toggleTodo(item) {
 	item.completed = !item.completed
 }
 
-// 할일 삭제
-function delTodo(id) {
-	const index = todos.findIndex(todo => todo.id === id)
-	if (index !== -1) {
-		todos.splice(index, 1)
-	}
-	console.log(todos)
-}
+// 체크된 항목 삭제
+function delSelected(id) {
+  if (checkedTodos.value.length === 0) {
+    alert('선택된 항목이 없습니다.');
+    return;
+  }
 
-onMounted(() => {
-	getTodos()
-}) 
+  checkedTodos.value.forEach(id => {
+    const index = todos.findIndex(todo => todo.id === id);
+    if (index !== -1) {
+      todos.splice(index, 1);
+    }
+  });
+  checkedTodos.value = [];
+}
 
 </script>
 
