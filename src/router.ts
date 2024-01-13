@@ -3,7 +3,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 // import Start from "./views/Start.vue";
 import Movies from "/src/views/Movies.vue";
 import Todo from "/src/views/Todo.vue";
-import News from "/src/views/News.vue";
+import Counter from "/src/views/Counter.vue";
 import Account from "/src/views/Account.vue";
 import Start from "/src/views/Start.vue";
 
@@ -24,9 +24,9 @@ const routes: RouteRecordRaw[] = [
     component: Todo,
   },
   {
-    path: "/news",
-    name: "News",
-    component: News,
+    path: "/counter",
+    name: "Counter",
+    component: Counter,
   },
   {
     path: "/account",
